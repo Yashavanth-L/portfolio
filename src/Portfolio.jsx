@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Sun, Moon, Download} from "lucide-react";
+import { Sun, Moon, Download, Menu, X } from "lucide-react";
 import { FaGithub as Github, FaLinkedin as Linkedin, FaEnvelope as Mail } from "react-icons/fa";
 
 
@@ -13,6 +13,8 @@ export default function Portfolio() {
     return window.matchMedia("(prefers-color-scheme: dark)").matches;
   });
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   useEffect(() => {
     const root = document.documentElement;
     if (darkMode) {
@@ -24,40 +26,48 @@ export default function Portfolio() {
     }
   }, [darkMode]);
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   const projects = [
     {
       id: 1,
       title: "ML Restaurant Recommender",
       description: "A ML-powered app built with Streamlit helps the User to Spot Best in Town Restaurants in Bengaluru.",
-      image: "/images/Restaurant.png",
+      image: "images/Restaurant.png",
       url: "https://yashavanth-l-bengaluru-restaurant-recommender.hf.space"
     },
     {
       id: 2,
       title: "Tambola Number Generator",
       description: "This Web-App helps you to generate Numbers from 1 to 90 to paly Tambola Game, No Tickets will be Generated.",
-      image: "/images/tambola-num-gen.png",
+      image: "images/tambola-num-gen.png",
       url: "https://yashavanth-l-tambola-number-generator.hf.space"
     },
     {
       id: 3,
       title: "Tambola Next Level",
       description: "This Web-Application is built to play Multiplayer Tambole or Housie Game(2 to 10 Players).",
-      image: "/images/tambola-nxt-lvl.png",
+      image: "images/tambola-nxt-lvl.png",
       url: "https://tambola-next-lvl-xcwljth5jac6cjxxyejuc7.streamlit.app/"
     },
     {
       id: 4,
       title: "AR Navigation System",
       description: "AR-Based Navigation Application developed using Unity 3D, ARCore, GoogelMaps API, GCP, FireBase.",
-      image: "/images/AR-Navigatio.png",
+      image: "images/AR-Nav.png",
       url: "https://drive.google.com/file/d/1C0GPxvz8bEfYZW4icOjRqrjQxo2YGuWJ/view?usp=drive_link"
     },
     {
       id: 5,
       title: "AR-Based Cricket Score Display",
       description: "Immersive WebXR-based Web-App to Display Cricket Score-Board, developed using Three.js and CrickBuzz API.",
-      image: "/images/IPL-Scorecard.png",
+      image: "images/IPL-Scorecard.png",
       url: "https://drive.google.com/file/d/1msl1-aBMr4--m6D_T2BUH2S51v1TTi89/view?usp=drive_link"
     }
   ];
@@ -68,6 +78,8 @@ export default function Portfolio() {
       <header className="fixed top-0 left-0 w-full backdrop-blur-lg bg-white/80 dark:bg-gray-900/80 shadow-md p-4 z-50 transition-all duration-300">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-extrabold tracking-wide">YASHAVANTH L</h1>
+          
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-6 text-md font-medium">
             <a href="#about" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition">About</a>
             <a href="#projects" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Projects</a>
@@ -75,6 +87,7 @@ export default function Portfolio() {
             <a href="#experience" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Experience</a>
             <a href="#contact" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Contact</a>
           </nav>
+
           <div className="flex items-center space-x-4">
             <button 
               onClick={() => setDarkMode(!darkMode)} 
@@ -90,8 +103,60 @@ export default function Portfolio() {
             >
               <Download size={18} />
             </a>
+            
+            {/* Hamburger Menu Button */}
+            <button
+              onClick={toggleMenu}
+              className="md:hidden p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-gray-900 shadow-lg border-t border-gray-200 dark:border-gray-700">
+            <nav className="flex flex-col space-y-4 p-4">
+              <a 
+                href="#about" 
+                onClick={closeMenu}
+                className="hover:text-indigo-600 dark:hover:text-indigo-400 transition py-2"
+              >
+                About
+              </a>
+              <a 
+                href="#projects" 
+                onClick={closeMenu}
+                className="hover:text-indigo-600 dark:hover:text-indigo-400 transition py-2"
+              >
+                Projects
+              </a>
+              <a 
+                href="#skills" 
+                onClick={closeMenu}
+                className="hover:text-indigo-600 dark:hover:text-indigo-400 transition py-2"
+              >
+                Skills
+              </a>
+              <a 
+                href="#experience" 
+                onClick={closeMenu}
+                className="hover:text-indigo-600 dark:hover:text-indigo-400 transition py-2"
+              >
+                Experience
+              </a>
+              <a 
+                href="#contact" 
+                onClick={closeMenu}
+                className="hover:text-indigo-600 dark:hover:text-indigo-400 transition py-2"
+              >
+                Contact
+              </a>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* Hero */}
@@ -103,7 +168,7 @@ export default function Portfolio() {
         <div className="flex justify-center gap-4 mt-16">
           <a href="https://github.com/Yashavanth-L" target="_blank" rel="noopener noreferrer" className="p-2 border rounded hover:bg-indigo-100 dark:hover:bg-indigo-800 transition-colors"><Github /></a>
           <a href="https://www.linkedin.com/in/yashavanthl/" target="_blank" rel="noopener noreferrer" className="p-2 border rounded hover:bg-indigo-100 dark:hover:bg-indigo-800 transition-colors"><Linkedin /></a>
-          <a href="mailto:yashvanthyuvi8055@gmail.com?subject=Portfolio Contact" className="p-2 border rounded hover:bg-indigo-100 dark:hover:bg-indigo-800 transition-colors"><Mail /></a>
+          <a href="mailto:yashvanthyuvi8055@gmail.com?subject=Hello Yashavanth" className="p-2 border rounded hover:bg-indigo-100 dark:hover:bg-indigo-800 transition-colors"><Mail /></a>
         </div>
       </header>
 
@@ -204,7 +269,7 @@ export default function Portfolio() {
       <section id="contact" className="text-center scroll-mt-24 mb-16">
         <h2 className="text-3xl font-semibold mb-6">Contact</h2>
         <p className="text-lg">Feel free to reach out via email:</p>
-        <a href="mailto:yashvanthyuvi8055@gmail.com" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">yashvanthyuvi8055@gmail.com</a>
+        <a href="mailto:yashvanthyuvi8055@gmail.com?subject=Hello Yashavanth" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">yashvanthyuvi8055@gmail.com</a>
       </section>
     </div>
   );

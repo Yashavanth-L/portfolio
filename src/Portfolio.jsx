@@ -4,19 +4,26 @@ import { FaGithub as Github, FaLinkedin as Linkedin, FaEnvelope as Mail } from "
 
 
 export default function Portfolio() {
-  const [darkMode, setDarkMode] = useState(() => {
-    // Check localStorage first, then system preference
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      return savedTheme === "dark";
-    }
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  });
-
+  const [darkMode, setDarkMode] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // Initialize theme on mount
   useEffect(() => {
-    // Apply theme immediately on mount
+    const savedTheme = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    
+    let initialTheme = false;
+    if (savedTheme) {
+      initialTheme = savedTheme === "dark";
+    } else {
+      initialTheme = prefersDark;
+    }
+    
+    setDarkMode(initialTheme);
+  }, []);
+
+  // Apply theme when darkMode changes
+  useEffect(() => {
     const root = document.documentElement;
     if (darkMode) {
       root.classList.add("dark");
@@ -27,18 +34,9 @@ export default function Portfolio() {
     }
   }, [darkMode]);
 
-  // Listen for system theme changes
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleChange = (e) => {
-      if (!localStorage.getItem("theme")) {
-        setDarkMode(e.matches);
-      }
-    };
-
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, []);
+  const toggleDarkMode = () => {
+    setDarkMode(prev => !prev);
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -113,7 +111,7 @@ export default function Portfolio() {
 
           <div className="flex items-center space-x-4">
             <button 
-              onClick={() => setDarkMode(!darkMode)} 
+              onClick={toggleDarkMode} 
               className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
               aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
             >

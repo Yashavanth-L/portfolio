@@ -16,6 +16,7 @@ export default function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
+    // Apply theme immediately on mount
     const root = document.documentElement;
     if (darkMode) {
       root.classList.add("dark");
@@ -26,12 +27,34 @@ export default function Portfolio() {
     }
   }, [darkMode]);
 
+  // Listen for system theme changes
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleChange = (e) => {
+      if (!localStorage.getItem("theme")) {
+        setDarkMode(e.matches);
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+  };
+
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.href = '/docs/Yashavanth.L.pdf';
+    link.download = 'Yashavanth_L_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const projects = [
@@ -96,13 +119,13 @@ export default function Portfolio() {
             >
               {darkMode ? <Sun size={18} className="text-yellow-500" /> : <Moon size={18} className="text-gray-700" />}
             </button>
-            <a
-              href="/resume.pdf"
-              download
+            <button
+              onClick={handleDownload}
               className="p-2 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 transition"
+              aria-label="Download Resume"
             >
               <Download size={18} />
-            </a>
+            </button>
             
             {/* Hamburger Menu Button */}
             <button

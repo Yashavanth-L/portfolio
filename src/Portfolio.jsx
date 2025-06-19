@@ -90,6 +90,13 @@ export default function Portfolio() {
       description: "Immersive WebXR-based Web-App to Display Cricket Score-Board, developed using Three.js and CrickBuzz API.",
       image: "images/IPL-Scorecard.png",
       url: "https://drive.google.com/file/d/1msl1-aBMr4--m6D_T2BUH2S51v1TTi89/view?usp=drive_link"
+    },
+    {
+      id: 6,
+      title: "JD Matcher",
+      description: "A Web-App to match the JD with the Candidate's Resume, developed using Python, FastAPI, Streamlit and Gemini's API.",
+      image: "images/JDMatcher.png",
+      url: "https://pdf-analyzer-hwktrmiabhefe5uzejgt9h.streamlit.app/"
     }
   ];
 

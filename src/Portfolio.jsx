@@ -50,7 +50,7 @@ export default function Portfolio() {
 
   const handleDownload = () => {
     const link = document.createElement('a');
-    link.href = '/docs/Yashavanth.L.pdf';
+    link.href = 'docs/Yashavanth.L.pdf';
     link.download = 'Yashavanth_L_Resume.pdf';
     document.body.appendChild(link);
     link.click();

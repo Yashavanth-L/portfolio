@@ -74,7 +74,7 @@ export default function Portfolio() {
       id: 3,
       title: "Tambola Next Level",
       description: "This Web-Application is built to play Multiplayer Tambole or Housie Game(2 to 10 Players).",
-      image: "images/tambola-nxt-lvl.png",
+      image: "images/Tambola Time Multiplayer Interface.png",
       url: "https://tambola-next-lvl-xcwljth5jac6cjxxyejuc7.streamlit.app/"
     },
     {
